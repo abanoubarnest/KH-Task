@@ -1,0 +1,75 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ student ? "Edit Student" : "Add Student" }}</h5>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss()"
+  ></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="studentForm">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input id="name" formControlName="name" class="form-control" />
+      <app-field-error [control]="formCtrl['name']"></app-field-error>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input id="email" formControlName="email" class="form-control" />
+      <app-field-error [control]="formCtrl['email']"></app-field-error>
+    </div>
+    <div class="mb-3">
+      <label for="age" class="form-label">Age</label>
+      <input
+        id="age"
+        formControlName="age"
+        class="form-control"
+        type="number"
+      />
+      <app-field-error [control]="formCtrl['age']"></app-field-error>
+    </div>
+    <div class="mb-3">
+      <label for="dateOfBirth" class="form-label">Date of Birth</label>
+      <p-calendar
+        class="d-block"
+        id="dateOfBirth"
+        formControlName="dateOfBirth"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        [showButtonBar]="true"
+        [readonlyInput]="true"
+        [maxDate]="today"
+      ></p-calendar>
+      <app-field-error [control]="formCtrl['dateOfBirth']"></app-field-error>
+    </div>
+    <div class="mb-3">
+      <label for="gender" class="form-label">Gender</label>
+      <ng-select
+        id="gender"
+        formControlName="gender"
+        [items]="genders"
+        bindLabel="name"
+        placeholder="Select Gender"
+      ></ng-select>
+      <app-field-error [control]="formCtrl['gender']"></app-field-error>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="activeModal.dismiss()"
+  >
+    Close
+  </button>
+  <button
+    [disabled]="studentForm.invalid"
+    type="button"
+    class="btn btn-primary"
+    (click)="save()"
+  >
+    Save
+  </button>
+</div>

@@ -1,0 +1,58 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <button class="btn btn-primary mb-3" (click)="openStudentForm()">
+      Create Student
+    </button>
+    <button
+      class="btn btn-danger"
+      (click)="deleteSelectedStudents()"
+      *ngIf="selectedStudentIds?.size"
+    >
+      Delete Selected
+    </button>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr class="text-center">
+        <th>
+          <input
+            type="checkbox"
+            (change)="isSelected = !isSelected; selectAllStudents()"
+            [checked]="isSelected"
+          />
+        </th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="text-center" *ngFor="let student of students">
+        <td>
+          <input
+            type="checkbox"
+            (change)="toggleStudentSelection(student.id)"
+            [checked]="isSelected"
+          />
+        </td>
+        <td>{{ student?.name }}</td>
+        <td>{{ student?.email }}</td>
+        <td>{{ student?.age }}</td>
+        <td>{{ student?.dateOfBirth | date : "yyyy-MM-dd" }}</td>
+        <td>{{ student.gender }}</td>
+        <td>
+          <button
+            class="btn btn-sm btn-secondary"
+            (click)="openStudentForm(student)"
+          >
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
