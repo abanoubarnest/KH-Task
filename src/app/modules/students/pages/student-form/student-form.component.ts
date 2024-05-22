@@ -1,5 +1,15 @@
-import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Student } from '../../models/student';
 import { StudentService } from '../../services/student.service';
@@ -8,6 +18,7 @@ import { StudentService } from '../../services/student.service';
   selector: 'app-student-form',
   templateUrl: './student-form.component.html',
   styleUrls: ['./student-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentFormComponent {
   @Input() student?: Student;
@@ -18,7 +29,8 @@ export class StudentFormComponent {
   constructor(
     public activeModal: NgbActiveModal,
     private fb: FormBuilder,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private cdr: ChangeDetectorRef
   ) {
     this.studentForm = this.initialForm();
   }
@@ -29,7 +41,7 @@ export class StudentFormComponent {
     }
   }
 
-  save() {
+  save(): void {
     if (this.studentForm.valid) {
       const formValues = this.studentForm.value;
       const studentData: Student = {
@@ -37,15 +49,19 @@ export class StudentFormComponent {
         ...formValues,
         dateOfBirth: new Date(formValues.dateOfBirth),
       };
+
       if (this.student) {
         this.studentService.updateStudent(studentData);
       } else {
         this.studentService.addStudent(studentData);
       }
+      this.cdr.detectChanges();
       this.activeModal.close();
     }
   }
-  get formCtrl() {
+  get formCtrl(): {
+    [key: string]: AbstractControl<any>;
+  } {
     return this.studentForm.controls;
   }
   initialForm(): FormGroup {

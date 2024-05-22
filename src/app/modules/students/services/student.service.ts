@@ -9,48 +9,53 @@ export class StudentService {
   constructor() {}
   private students = new BehaviorSubject<Student[]>([
     {
-      id: 1,
-      age: 33,
-      email: 'test@test.com',
+      id: Math.floor(Math.random() * 100),
+      age: 30,
+      email: 'ahmed@test.com',
       gender: 'male',
       name: 'Ahmed',
       dateOfBirth: new Date(),
     },
     {
-      id: 2,
-      age: 33,
-      email: 'test@test.com',
+      id: Math.floor(Math.random() * 100),
+      age: 31,
+      email: 'ali@test.com',
       gender: 'male',
       name: 'Ali',
       dateOfBirth: new Date(),
     },
     {
-      id: 3,
-      age: 33,
-      email: 'test@test.com',
+      id: Math.floor(Math.random() * 100),
+      age: 32,
+      email: 'micheal@test.com',
       gender: 'male',
       name: 'Micheal',
       dateOfBirth: new Date(),
     },
+    {
+      id: Math.floor(Math.random() * 100),
+      age: 24,
+      email: 'mja@mja.com',
+      gender: 'female',
+      name: 'Mja',
+      dateOfBirth: new Date(),
+    },
   ]);
   students$ = this.students.asObservable();
-  addStudent(student: Student) {
-    student.id = this.students.value.length
-      ? this.students.getValue().length + 1
-      : 1;
+  addStudent(student: Student): void {
+    student.id = Math.floor(Math.random() * 100);
     const currentStudents = this.students.value;
-    debugger;
     this.students.next([...currentStudents, student]);
   }
 
-  updateStudent(updatedStudent: Student) {
+  updateStudent(updatedStudent: Student): void {
     const currentStudents = this.students.value.map((student) =>
       student.id === updatedStudent.id ? updatedStudent : student
     );
     this.students.next(currentStudents);
   }
 
-  deleteStudents(ids: number[]) {
+  deleteStudents(ids: number[]): void {
     const currentStudents = this.students.value.filter(
       (student) => !ids.includes(student.id)
     );

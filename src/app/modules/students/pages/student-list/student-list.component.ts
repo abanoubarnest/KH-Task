@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Student } from '../../models/student';
 import { StudentService } from '../../services/student.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -43,6 +43,11 @@ export class StudentListComponent extends UnsubscribingComponent {
     }
     if (!this.selectedStudentIds.size) {
       this.isSelected = false;
+    }
+    if (this.students.length == this.selectedStudentIds.size) {
+      if (this.students.length) {
+        this.isSelected = true;
+      }
     }
   }
 

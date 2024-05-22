@@ -3,7 +3,7 @@
     <small class="text-danger"> This field is required. </small>
   </div>
   <div *ngIf="error?.message == 'min'">
-    <small class="text-danger">The min value is {{ error?.error?.min }}</small>
+    <small class="text-danger">The min value is {{ error.error?.min }}</small>
   </div>
   <div *ngIf="error?.message == 'email'">
     <small class="text-danger"> Enter valid email</small>
